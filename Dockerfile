@@ -1,4 +1,4 @@
-FROM maven:3-openjdk-16-slim AS wsl --set-default-version 2build
+FROM maven:3-openjdk-16-slim AS build
 WORKDIR /app
 COPY . .
 RUN mvn -B package
