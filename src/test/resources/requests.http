@@ -1,0 +1,98 @@
+###
+# Registration
+POST https://server.local:8443/api/rest/users/register
+Content-Type: application/json
+
+{
+  "username": {{$uuid}},
+  "password": "top-secret"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+POST https://server.local:8443/api/rest/users/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "god"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+POST https://server.local:8443/api/rest/users/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "god11"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+GET https://server.local:8443/api/rest/users/2/cards
+Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+
+###
+
+GET https://server.local:8443/api/rest/cards/9
+Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+
+###
+
+POST https://server.local:8443/api/rest/users/2/cards
+Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+
+###
+
+DELETE https://server.local:8443/api/rest/cards/12
+Authorization: FCK5E0FJOICvDSXLSopIRZh5qzlU6EdVpr/fpjZmtsqI338lV886e0GAZZqKY2f3AFwhuJMrGzJ+TWQdxB8aRw==
+
+###
+
+POST https://server.local:8443/api/rest/cards/13/transfer
+Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+Content-Type: application/json
+
+{
+  "to": 10,
+  "amount": 6000
+}
+
+###
+
+POST https://server.local:8443/api/rest/users/reset
+Content-Type: application/json
+
+{
+  "username": "admin"
+}
+
+###
+
+POST https://server.local:8443/api/rest/users/changepass
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "god11",
+  "resetCode": "055639"
+}
