@@ -53,8 +53,13 @@ Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjw
 
 ###
 
-GET https://server.local:8443/api/rest/cards/9
+GET https://server.local:8443/api/rest/cards/3
 Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+
+###
+
+GET https://server.local:8443/api/rest/cards/3
+Authorization: Basic admin:god
 
 ###
 

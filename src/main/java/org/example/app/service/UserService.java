@@ -23,10 +23,28 @@ public class UserService implements AuthenticationProvider, AnonymousProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) {
-        final var token = (String) authentication.getPrincipal();
+        final var str = (String) authentication.getPrincipal();
 
-        return repository.findByToken(token)
-                // TODO: add user roles
+        if (str.startsWith("Basic ")) {
+            final var usernamePassword = str.substring("Basic ".length()).split(":", 2);
+            if (usernamePassword.length != 2) throw new AuthenticationException();
+
+            final var username = usernamePassword[0].trim().toLowerCase();
+            final var password = usernamePassword[1].trim();
+
+            final var saved = repository.getByUsernameWithPassword(username)
+                    .orElseThrow(UserNotFoundException::new);
+            if (!passwordEncoder.matches(password, saved.getPassword())) {
+                // FIXME: Security issue
+                throw new PasswordNotMatchesException();
+            }
+            final var user = new User(saved.getId(), saved.getUsername());
+            return new BasicAuthentication(user, null,
+                    repository.getRolesByUserId(user), true);
+        }
+
+
+        return repository.findByToken(str)
                 .map(o -> new TokenAuthentication(o, null, repository.getRolesByUserId(o), true))
                 .orElseThrow(AuthenticationException::new);
     }
