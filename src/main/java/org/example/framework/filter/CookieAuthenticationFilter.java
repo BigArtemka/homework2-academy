@@ -12,8 +12,8 @@ import org.example.framework.security.*;
 
 import java.io.IOException;
 
-public class BasicAuthenticationFilter extends HttpFilter {
-    private AuthenticationProvider provider;
+public class CookieAuthenticationFilter extends HttpFilter {
+    AuthenticationProvider provider;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -28,15 +28,14 @@ public class BasicAuthenticationFilter extends HttpFilter {
             return;
         }
 
-        final var usernamePassword = req.getHeader("Authorization");
-        if (usernamePassword == null || !usernamePassword.startsWith("Basic ")) {
+        final var token = req.getHeader("Cookie");
+        if (token == null) {
             super.doFilter(req, res, chain);
             return;
         }
 
         try {
-            final var authentication = provider
-                    .authenticateBasic(new BasicAuthentication(usernamePassword, null));
+            final var authentication = provider.authenticate(new TokenAuthentication(token, null));
             req.setAttribute(RequestAttributes.AUTH_ATTR, authentication);
         } catch (AuthenticationException e) {
             res.sendError(401);
@@ -55,4 +54,5 @@ public class BasicAuthenticationFilter extends HttpFilter {
 
         return AnonymousAuthentication.class.isAssignableFrom(existingAuth.getClass());
     }
+
 }
