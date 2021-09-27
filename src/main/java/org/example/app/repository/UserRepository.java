@@ -26,6 +26,7 @@ public class UserRepository {
             resultSet.getString("password")
     );
     private final RowMapper<String> rowMapperRoles = resultSet -> resultSet.getString("name");
+    private final RowMapper<Double> rowMapperTimes = resultSet -> resultSet.getDouble("time");
 
     public Optional<User> getByUsername(String username) {
         // language=PostgreSQL
@@ -112,6 +113,16 @@ public class UserRepository {
         );
     }
 
+    public Optional<Double> getTokenLifeTime(String token) {
+        // language=PostgreSQL
+        return jdbcTemplate.queryOne(
+                """
+                        SELECT (EXTRACT(epoch FROM CURRENT_TIMESTAMP) -
+                        EXTRACT(EPOCH FROM (SELECT created FROM tokens WHERE token = ?))) as time;
+                        """, rowMapperTimes, token
+        );
+    }
+
     public void generateResetCode(String username, String code) {
         // language=PostgreSQL
         jdbcTemplate.update(
@@ -140,5 +151,15 @@ public class UserRepository {
                 rowMapper,
                 password, username
         );
+    }
+
+    public void updateTokenCreated(String token) {
+        // language=PostgreSQL
+        jdbcTemplate.update(
+                """
+                        UPDATE tokens SET created = current_timestamp WHERE token = ?
+                        """, token
+        );
+
     }
 }

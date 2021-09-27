@@ -15,6 +15,8 @@ import java.security.SecureRandom;
 
 @RequiredArgsConstructor
 public class UserService implements AuthenticationProvider, AnonymousProvider {
+    //Token lifetime = 600 seconds
+    private final Double TOKEN_LIFETIME = 600.0;
     private final UserRepository repository;
     private final JpaTransactionTemplate transactionTemplate;
     private final PasswordEncoder passwordEncoder;
@@ -24,6 +26,14 @@ public class UserService implements AuthenticationProvider, AnonymousProvider {
     @Override
     public Authentication authenticate(Authentication authentication) {
         final var token = (String) authentication.getPrincipal();
+
+        if (repository.getTokenLifeTime(token).orElseThrow(AuthenticationException::new) > TOKEN_LIFETIME) {
+            throw new AuthenticationException();
+        }
+
+        // Update token created time
+        repository.updateTokenCreated(token);
+
         return repository.findByToken(token)
                 .map(o -> new TokenAuthentication(o, null, repository.getRolesByUserId(o), true))
                 .orElseThrow(AuthenticationException::new);

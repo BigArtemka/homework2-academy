@@ -37,7 +37,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "god11"
+  "password": "god"
 }
 
 > {%
@@ -53,8 +53,8 @@ Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjw
 
 ###
 
-GET https://server.local:8443/api/rest/cards/3
-Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+GET https://server.local:8443/api/rest/cards/2
+Authorization: U8QVpEJ/COHkDtNwu1tGUJjwIDAE6QIgGtaLYrcongbl9X1+i7RwJnMlOBf1THh84dcifP16WqmcTjo8rjDAJQ==
 
 ###
 
