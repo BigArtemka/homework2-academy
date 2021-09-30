@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class GetResetCodeResponseDto {
+public class GenerateResetCodeRequestDto {
     private String username;
-    private String resetCode;
 }

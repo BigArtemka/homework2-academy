@@ -113,13 +113,13 @@ public class UserService implements AuthenticationProvider, AnonymousProvider {
         return new LoginResponseDto(saved.getId(), saved.getUsername(), token);
     }
 
-    public GetResetCodeResponseDto generateResetCode(GetResetCodeRequestDto requestDto) {
+    public GenerateResetCodeResponseDto generateResetCode(GenerateResetCodeRequestDto requestDto) {
         final var username = requestDto.getUsername().trim().toLowerCase();
         final var code = String.format("%d%d%d%d%d%d", secureRandom.nextInt(10),
                 secureRandom.nextInt(10), secureRandom.nextInt(10), secureRandom.nextInt(10),
                 secureRandom.nextInt(10), secureRandom.nextInt(10));
         repository.generateResetCode(username, code);
-        return new GetResetCodeResponseDto(username, code);
+        return new GenerateResetCodeResponseDto(username, code);
     }
 
     public LoginResponseDto resetPass(ResetRequestDto requestDto) {

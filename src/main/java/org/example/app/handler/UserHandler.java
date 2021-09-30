@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.example.app.dto.GetResetCodeRequestDto;
+import org.example.app.dto.GenerateResetCodeRequestDto;
 import org.example.app.dto.LoginRequestDto;
 import org.example.app.dto.RegistrationRequestDto;
 import org.example.app.dto.ResetRequestDto;
@@ -47,7 +47,7 @@ public class UserHandler {
     public void getCode(HttpServletRequest req, HttpServletResponse resp) {
         try {
             log.log(Level.INFO, "getResetCode");
-            final var requestDto = gson.fromJson(req.getReader(), GetResetCodeRequestDto.class);
+            final var requestDto = gson.fromJson(req.getReader(), GenerateResetCodeRequestDto.class);
             final var responseDto = service.generateResetCode(requestDto);
             resp.setHeader("Content-Type", "application/json");
             resp.getWriter().write(gson.toJson(responseDto));
