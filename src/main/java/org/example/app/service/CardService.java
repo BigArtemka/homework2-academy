@@ -5,9 +5,7 @@ import org.example.app.domain.Card;
 import org.example.app.domain.User;
 import org.example.app.dto.TransferRequestDto;
 import org.example.app.dto.TransferResponseDto;
-import org.example.app.exception.CardNotFoundException;
-import org.example.app.exception.CardOrderException;
-import org.example.app.exception.TransferException;
+import org.example.app.exception.*;
 import org.example.app.repository.CardRepository;
 
 import java.util.Random;
@@ -48,7 +46,8 @@ public class CardService {
         final var amount = transferRequestDto.getAmount();
         final var cardFrom = cardRepository.getById(from).orElseThrow(CardNotFoundException::new);
         final var cardTo = cardRepository.getById(to).orElseThrow(CardNotFoundException::new);
-        if (amount <= 0 || amount > cardFrom.getBalance()) throw new TransferException();
+        if (amount <= 0) throw new IncorrectAmountException();
+        if (amount > cardFrom.getBalance()) throw new InsufficientFundsException();
         cardRepository.transfer(from, to, amount);
         return new TransferResponseDto(cardFrom.getId(), cardFrom.getNumber(), cardTo.getId(), cardTo.getNumber());
     }
