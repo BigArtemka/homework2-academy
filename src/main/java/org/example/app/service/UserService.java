@@ -41,19 +41,14 @@ public class UserService implements AuthenticationProvider, AnonymousProvider {
 
     @Override
     public Authentication authenticateBasic(Authentication authentication) {
-        final var str = (String) authentication.getPrincipal();
-        final var usernamePassword = str.substring("Basic ".length()).split(":", 2);
-        if (usernamePassword.length != 2) throw new AuthenticationException();
-
-        final var username = usernamePassword[0].trim().toLowerCase();
-        final var password = usernamePassword[1].trim();
-
-        final var saved = repository.getByUsernameWithPassword(username)
+        final var saved = repository.getByUsernameWithPassword((String) authentication.getPrincipal())
                 .orElseThrow(UserNotFoundException::new);
-        if (!passwordEncoder.matches(password, saved.getPassword())) {
+
+        if (!passwordEncoder.matches((String) authentication.getCredentials(), saved.getPassword())) {
             // FIXME: Security issue
             throw new PasswordNotMatchesException();
         }
+
         final var user = new User(saved.getId(), saved.getUsername());
         return new BasicAuthentication(user, null,
                 repository.getRolesByUserId(user), true);

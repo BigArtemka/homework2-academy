@@ -9,8 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.framework.attribute.ContextAttributes;
 import org.example.framework.attribute.RequestAttributes;
 import org.example.framework.security.*;
+import org.postgresql.util.Base64;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class BasicAuthenticationFilter extends HttpFilter implements AuthenticationFilter {
     private AuthenticationProvider provider;
@@ -28,15 +30,23 @@ public class BasicAuthenticationFilter extends HttpFilter implements Authenticat
             return;
         }
 
-        final var usernamePassword = req.getHeader("Authorization");
-        if (usernamePassword == null || !usernamePassword.startsWith("Basic ")) {
+        final var header = req.getHeader("Authorization");
+        if (header == null || !header.startsWith("Basic ")) {
             super.doFilter(req, res, chain);
             return;
         }
 
         try {
+            final var usernamePassword = new String(Base64.decode(header.substring("Basic ".length())),
+                    StandardCharsets.UTF_8).split(":", 2);
+            if (usernamePassword.length != 2) throw new AuthenticationException();
+
+            final var username = usernamePassword[0].trim().toLowerCase();
+            final var password = usernamePassword[1].trim();
+
             final var authentication = provider
-                    .authenticateBasic(new BasicAuthentication(usernamePassword, null));
+                    .authenticateBasic(new BasicAuthentication(username, password));
+
             req.setAttribute(RequestAttributes.AUTH_ATTR, authentication);
         } catch (AuthenticationException e) {
             res.sendError(401);

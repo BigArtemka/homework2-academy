@@ -58,8 +58,8 @@ Authorization: U8QVpEJ/COHkDtNwu1tGUJjwIDAE6QIgGtaLYrcongbl9X1+i7RwJnMlOBf1THh84
 
 ###
 
-GET https://server.local:8443/api/rest/cards/3
-Authorization: Basic admin:god
+GET https://server.local:8443/api/rest/cards/1
+Authorization: Basic YWRtaW46Z29k
 
 ###
 
