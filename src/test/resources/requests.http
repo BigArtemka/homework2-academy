@@ -49,12 +49,12 @@ client.test("Request executed successfully", function() {
 ###
 
 GET https://server.local:8443/api/rest/users/2/cards
-Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+Authorization: od62N0b4Q8Bd7w/8/rEZybvla3B49iEBYtmFGy1xcwtMkgThcX7SHVg9FP4HNSjKhqXwi6hhHS7wr9hm5hneWQ==
 
 ###
 
-GET https://server.local:8443/api/rest/cards/2
-Authorization: U8QVpEJ/COHkDtNwu1tGUJjwIDAE6QIgGtaLYrcongbl9X1+i7RwJnMlOBf1THh84dcifP16WqmcTjo8rjDAJQ==
+GET https://server.local:8443/api/rest/cards/1
+Authorization: od62N0b4Q8Bd7w/8/rEZybvla3B49iEBYtmFGy1xcwtMkgThcX7SHVg9FP4HNSjKhqXwi6hhHS7wr9hm5hneWQ==
 
 ###
 
@@ -63,27 +63,27 @@ Authorization: Basic YWRtaW46Z29k
 
 ###
 
-GET https://server.local:8443/api/rest/cards/3
-Cookie: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+GET https://server.local:8443/api/rest/cards/1
+Cookie: token=od62N0b4Q8Bd7w/8/rEZybvla3B49iEBYtmFGy1xcwtMkgThcX7SHVg9FP4HNSjKhqXwi6hhHS7wr9hm5hneWQ==; screen-size=1720x1080
 
 ###
 
 POST https://server.local:8443/api/rest/users/2/cards
-Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+Authorization: od62N0b4Q8Bd7w/8/rEZybvla3B49iEBYtmFGy1xcwtMkgThcX7SHVg9FP4HNSjKhqXwi6hhHS7wr9hm5hneWQ==
 
 ###
 
-DELETE https://server.local:8443/api/rest/cards/3
-Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+DELETE https://server.local:8443/api/rest/cards/2
+Authorization: od62N0b4Q8Bd7w/8/rEZybvla3B49iEBYtmFGy1xcwtMkgThcX7SHVg9FP4HNSjKhqXwi6hhHS7wr9hm5hneWQ==
 
 ###
 
 POST https://server.local:8443/api/rest/cards/1/transfer
-Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+Authorization: od62N0b4Q8Bd7w/8/rEZybvla3B49iEBYtmFGy1xcwtMkgThcX7SHVg9FP4HNSjKhqXwi6hhHS7wr9hm5hneWQ==
 Content-Type: application/json
 
 {
-  "to": 2,
+  "to": 4,
   "amount": 6000
 }
 
