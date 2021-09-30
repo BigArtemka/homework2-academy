@@ -2,6 +2,7 @@ package org.example.app.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.app.domain.Card;
+import org.example.app.domain.User;
 import org.example.app.dto.TransferRequestDto;
 import org.example.app.dto.TransferResponseDto;
 import org.example.app.exception.CardNotFoundException;
@@ -17,16 +18,20 @@ public class CardService {
     private final CardRepository cardRepository;
     private final Random rn = new Random();
 
+    public boolean isNotOwnerByUserId(User user, long ownerId) {
+        return ownerId != user.getId();
+    }
+
+    public boolean isNotOwnerByCardId(User user, long cardId) {
+        return user.getId() != cardRepository.getOwnerById(cardId).orElseThrow(CardNotFoundException::new);
+    }
+
     public Set<Card> getAllByOwnerId(long ownerId) {
         return cardRepository.getAllByOwnerId(ownerId);
     }
 
     public Card getById(long id) {
         return cardRepository.getById(id).orElseThrow(CardNotFoundException::new);
-    }
-
-    public Long getOwnerById(long id) {
-        return cardRepository.getOwnerById(id).orElseThrow(CardNotFoundException::new);
     }
 
     public Card createCard(long userId) {

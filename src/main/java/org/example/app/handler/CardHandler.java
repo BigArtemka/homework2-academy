@@ -25,7 +25,7 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
             final var auth = AuthHelper.getAuth(req);
             final var user = UserHelper.getUser(auth);
             final var userId = AttrHelper.getUserIdAttr(req);
-            if (userId != user.getId() && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
+            if (service.isNotOwnerByUserId(user, userId) && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
                 resp.sendError(403);
                 return;
             }
@@ -42,7 +42,7 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
             final var auth = AuthHelper.getAuth(req);
             final var user = UserHelper.getUser(auth);
             final var cardId = AttrHelper.getCardIdAttr(req);
-            if (service.getOwnerById(cardId) != user.getId() && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
+            if (service.isNotOwnerByCardId(user, cardId) && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
                 resp.sendError(403);
                 return;
             }
@@ -59,7 +59,7 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
             final var auth = AuthHelper.getAuth(req);
             final var user = UserHelper.getUser(auth);
             final var userId = AttrHelper.getUserIdAttr(req);
-            if (userId != user.getId() && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
+            if (service.isNotOwnerByUserId(user, userId) && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
                 resp.sendError(403);
                 return;
             }
@@ -76,7 +76,7 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
             final var auth = AuthHelper.getAuth(req);
             final var user = UserHelper.getUser(auth);
             final var cardId = AttrHelper.getCardIdAttr(req);
-            if (service.getOwnerById(cardId) != user.getId() && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
+            if (service.isNotOwnerByCardId(user, cardId) && !auth.getAuthorities().contains(Roles.ROLE_ADMIN)) {
                 resp.sendError(403);
                 return;
             }
@@ -93,7 +93,7 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
             final var auth = AuthHelper.getAuth(req);
             final var user = UserHelper.getUser(auth);
             final var cardId = AttrHelper.getCardIdAttr(req);
-            if (service.getOwnerById(cardId) != user.getId()) {
+            if (service.isNotOwnerByCardId(user, cardId)) {
                 resp.sendError(403);
                 return;
             }
