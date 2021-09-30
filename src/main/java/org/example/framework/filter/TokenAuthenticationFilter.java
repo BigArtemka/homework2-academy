@@ -12,7 +12,7 @@ import org.example.framework.security.*;
 
 import java.io.IOException;
 
-public class TokenAuthenticationFilter extends HttpFilter {
+public class TokenAuthenticationFilter extends HttpFilter implements AuthenticationFilter {
   private AuthenticationProvider provider;
 
   @Override
@@ -43,15 +43,5 @@ public class TokenAuthenticationFilter extends HttpFilter {
     }
 
     super.doFilter(req, res, chain);
-  }
-
-  private boolean authenticationIsRequired(HttpServletRequest req) {
-    final var existingAuth = (Authentication) req.getAttribute(RequestAttributes.AUTH_ATTR);
-
-    if (existingAuth == null || !existingAuth.isAuthenticated()) {
-      return true;
-    }
-
-    return AnonymousAuthentication.class.isAssignableFrom(existingAuth.getClass());
   }
 }

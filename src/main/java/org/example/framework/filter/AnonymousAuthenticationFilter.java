@@ -12,7 +12,7 @@ import org.example.framework.security.*;
 
 import java.io.IOException;
 
-public class AnonymousAuthenticationFilter extends HttpFilter {
+public class AnonymousAuthenticationFilter extends HttpFilter implements AuthenticationFilter {
     AnonymousProvider provider;
 
     @Override
@@ -34,7 +34,8 @@ public class AnonymousAuthenticationFilter extends HttpFilter {
         super.doFilter(req, res, chain);
     }
 
-    private boolean authenticationIsRequired(HttpServletRequest req) {
+    @Override
+    public boolean authenticationIsRequired(HttpServletRequest req) {
         final var existingAuth = (Authentication) req.getAttribute(RequestAttributes.AUTH_ATTR);
 
         return existingAuth == null || !existingAuth.isAuthenticated();
