@@ -3,6 +3,7 @@ package org.example.framework.filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +29,15 @@ public class CookieAuthenticationFilter extends HttpFilter implements Authentica
             return;
         }
 
-        final var token = req.getHeader("Cookie");
+        Cookie[] cookies = req.getCookies();
+        String token = null;
+
+        if (cookies != null)
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token"))
+                    token = cookie.getValue();
+            }
+
         if (token == null) {
             super.doFilter(req, res, chain);
             return;
